@@ -2,7 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button, Alert, Image } from 'react-native';
 import * as Facebook from 'expo-facebook';
-import { createAppContainer, createStackNavigator, createSwitchNavigator, create } from "react-navigation"
+import { FACEBOOK_APP_ID } from 'react-native-dotenv'
+
 export default function App() {
 
 
@@ -11,7 +12,7 @@ export default function App() {
   const [friends, setFriends] = useState([])
   async function login() {
     try {
-      await Facebook.initializeAsync('1429991460507265');
+      await Facebook.initializeAsync("1429991460507265");
       const {
         type,
         token,

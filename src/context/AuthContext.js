@@ -1,7 +1,6 @@
-import createDataContext from "./CreateDataContext"
+import createDataContext from "./createDataContext"
 
 const authReducer = (state, action) => {
-
     switch (action.type) {
         case 'RESTORE_TOKEN':
             return {
@@ -48,9 +47,23 @@ const signUp = async (dispatch, data) => {
     }
 }
 
+const restoreToken = async (dispatch, token) => {
+    return (token) => {
+        // In a production app, we need to send user data to server and get a token
+        // We will also need to handle errors if sign up failed
+        // After getting token, we need to persist the token using `AsyncStorage`
+        // In the example, we'll use a dummy token
 
-export const { Context, Provider } = createDataContext(authReducer, { signIn, signUp, signOut }, {
-    isLoading: true,
-    isSignout: false,
-    userToken: null,
-})
+        dispatch({ type: 'RESTORE_TOKEN', token });
+    }
+}
+
+
+export const { Provider, Context } = createDataContext(
+    authReducer,
+    { signIn, signUp, signOut },
+    {
+        isLoading: true,
+        isSignout: false,
+        userToken: null,
+    })
