@@ -13,14 +13,19 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.dlg.ourlist",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.dlg.ourlist",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
     }
-  }
+  },
+  "facebookScheme": "fb1429991460507265",
+  "facebookAppId": "1429991460507265"
 }
