@@ -25,8 +25,9 @@ const authReducer = (state, action) => {
     }
 }
 
-const signIn = async (dispatch, data) => {
-    return (data) => {
+const signIn = (dispatch, data) => {
+    return async (data) => {
+        console.log(data)
         // In a production app, we need to send some data (usually username, password) to server and get a token
         // We will also need to handle errors if sign in failed
         // After getting token, we need to persist the token using `AsyncStorage`
@@ -36,8 +37,8 @@ const signIn = async (dispatch, data) => {
 }
 const signOut = (dispatch) => () => dispatch({ type: 'SIGN_OUT' })
 
-const signUp = async (dispatch, data) => {
-    return (data) => {
+const signUp = (dispatch, data) => {
+    return async (data) => {
         // In a production app, we need to send user data to server and get a token
         // We will also need to handle errors if sign up failed
         // After getting token, we need to persist the token using `AsyncStorage`
@@ -47,8 +48,9 @@ const signUp = async (dispatch, data) => {
     }
 }
 
-const restoreToken = async (dispatch, token) => {
-    return (token) => {
+const restoreToken = (dispatch, token) => {
+    return async (token) => {
+        console.log("hi")
         // In a production app, we need to send user data to server and get a token
         // We will also need to handle errors if sign up failed
         // After getting token, we need to persist the token using `AsyncStorage`
@@ -61,7 +63,7 @@ const restoreToken = async (dispatch, token) => {
 
 export const { Provider, Context } = createDataContext(
     authReducer,
-    { signIn, signUp, signOut },
+    { signIn, signUp, signOut, restoreToken },
     {
         isLoading: true,
         isSignout: false,

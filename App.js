@@ -13,8 +13,8 @@ const Stack = createStackNavigator();
 
 const App = ({ navigation }) => {
   const { state, restoreToken } = useContext(AuthContext)
-  //{ state, signIn, signOut, restoreToken }
-  console.log(state)
+
+  console.log(restoreToken)
 
   React.useEffect(() => {
     // Fetch the token from storage then navigate to our appropriate place
@@ -31,7 +31,7 @@ const App = ({ navigation }) => {
 
       // This will switch to the App screen or Auth screen and this loading
       // screen will be unmounted and thrown away.
-      restoreToken(userToken)
+      await restoreToken(userToken)
     };
 
     bootstrapAsync();
