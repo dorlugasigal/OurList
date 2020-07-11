@@ -1,10 +1,13 @@
-import React, { useContext } from 'react'
-import { StyleSheet, TextInput, View, Button } from 'react-native'
+import React, { useContext, useState, useEffect } from 'react'
+import { StyleSheet, View, Button, Dimensions, StatusBar, Animated, Keyboard, KeyboardAvoidingView } from 'react-native'
 import { Context as AuthContext } from "../context/AuthContext"
+import { SocialIcon, Input, Icon, Text } from 'react-native-elements'
+import * as Animatable from "react-native-animatable"
 
-
-const SignIn = () => {
+const SignIn = ({ navigation: { navigate } }) => {
     const { state, restoreToken } = useContext(AuthContext)
+
+    const { height } = Dimensions.get("screen")
 
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -45,22 +48,76 @@ const SignIn = () => {
         }
     }
     return (
-        <View>
-            <TextInput
-                placeholder="Username"
-                value={username}
-                onChangeText={setUsername}
-            />
-            <TextInput
-                placeholder="Password"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-            />
-            <Button title="Sign in" onPress={() => signIn({ username, password })} />
-        </View>
+        <View style={styles.container}>
+            <View style={styles.header}>
+                <Animatable.Image
+                    animation="bounceIn"
+                    duration={800}
+                    source={require("../../assets/logo.png")}
+                    style={{ height: height * 0.2, width: height * 0.2 }}
+                />
+
+            </View>
+            <Animatable.View
+                animation="fadeInUpBig"
+
+                style={styles.footer}
+                behavior="padding"
+            >
+                <Input
+                    placeholder='Email'
+                    value={username}
+                    onChangeText={setUsername}
+                    leftIcon={
+                        <Icon
+                            name='email'
+                            type='fontisto'
+                            size={20}
+                            color='gray'
+                        />
+                    }
+                />
+                <Input
+                    value={password}
+                    onChangeText={setPassword}
+                    secureTextEntry
+                    placeholder='Password'
+                    leftIcon={
+                        <Icon
+                            color='gray'
+                            name='lock'
+                            type="feather"
+                            size={20}
+                        />
+                    }
+                />
+                <Button title="Sign in" onPress={() => signIn({ username, password })} />
+                <Button title="Sign up" onPress={() => signIn({ username, password })} />
+            </Animatable.View>
+            <StatusBar style="auto" />
+        </View >
+
     );
 }
 export default SignIn
 
-const styles = StyleSheet.create({})
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: "#3f2d5c"
+    },
+    header: {
+        flex: 3,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    footer: {
+        flex: 2,
+        backgroundColor: "#fff",
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        paddingHorizontal: 30,
+        paddingVertical: 50,
+    }
+})

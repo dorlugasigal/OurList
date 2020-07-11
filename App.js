@@ -3,6 +3,7 @@ import { AsyncStorage } from 'react-native';
 
 import HomeScreen from "./src/screens/Home"
 import SignInScreen from "./src/screens/SignIn"
+import GetStartedScreen from "./src/screens/GetStarted"
 import SplashScreen from "./src/screens/Splash"
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -46,15 +47,29 @@ const App = ({ navigation }) => {
           <Stack.Screen name="Splash" component={SplashScreen} />
         ) : state.userToken == null ? (
           // No token found, user isn't signed in
-          <Stack.Screen
-            name="SignIn"
-            component={SignInScreen}
-            options={{
-              title: 'Sign in',
-              // When logging out, a pop animation feels intuitive
-              animationTypeForReplace: state.isSignout ? 'pop' : 'push',
-            }}
-          />
+          <>
+            <Stack.Screen
+              name="GetStarted"
+              component={GetStartedScreen}
+              options={{
+                headerShown: false,
+                title: 'Sign in',
+                // When logging out, a pop animation feels intuitive
+                animationTypeForReplace: state.isSignout ? 'pop' : 'push',
+              }}
+            />
+            <Stack.Screen
+              name="SignIn"
+              component={SignInScreen}
+              options={{
+                headerShown: false,
+                title: 'Sign in',
+                // When logging out, a pop animation feels intuitive
+                animationTypeForReplace: state.isSignout ? 'pop' : 'push',
+              }}
+            />
+
+          </>
         ) : (
               // User is signed in
               <Stack.Screen name="Home" component={HomeScreen} />
