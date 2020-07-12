@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { StyleSheet, View, Dimensions, StatusBar, } from 'react-native'
+import { StyleSheet, View, Dimensions, StatusBar, Alert, } from 'react-native'
 import { Context as AuthContext } from "../context/AuthContext"
+import * as Facebook from 'expo-facebook';
 import { SocialIcon, Text } from 'react-native-elements'
 import * as Animatable from "react-native-animatable"
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -28,11 +29,7 @@ const GetStarted = ({ navigation: { navigate } }) => {
                 var me = await res.json();
                 const response = await fetch(`https://graph.facebook.com/v7.0/${me.id}/friends?access_token=${token}`);
                 var friends = await response.json();
-                setFriends(friends)
                 const picture = await fetch(`https://graph.facebook.com/v7.0/${friends.data[0].id}/picture?access_token=${token}&type=normal&height=100&width=100`);
-                setPicture(picture.url)
-                console.log(`${me.name} phone`)
-
                 Alert.alert('Logged in!', `Hi ${me.name}!`);
             } else {
                 // type === 'cancel'
@@ -47,7 +44,7 @@ const GetStarted = ({ navigation: { navigate } }) => {
             <View style={styles.header}>
                 <Animatable.Image
                     animation="bounceIn"
-                    duration={1000}
+                    duration={800}
                     source={require("../../assets/logo.png")}
                     style={{ height: height * 0.3, width: height * 0.3 }}
                 />
@@ -55,7 +52,6 @@ const GetStarted = ({ navigation: { navigate } }) => {
             </View>
             <Animatable.View
                 duration={1000}
-
                 animation="fadeInUpBig"
                 style={styles.footer}
             >
@@ -84,7 +80,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#3f2d5c"
     },
     header: {
-        flex: 3,
+        flex: 4,
         justifyContent: "center",
         alignItems: "center"
     },

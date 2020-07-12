@@ -4,6 +4,7 @@ import { AsyncStorage } from 'react-native';
 import HomeScreen from "./src/screens/Home"
 import SignInScreen from "./src/screens/SignIn"
 import GetStartedScreen from "./src/screens/GetStarted"
+import SmsAuthenticationScreen from "./src/screens/SmsAuthentication"
 import SplashScreen from "./src/screens/Splash"
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -37,7 +38,12 @@ const App = ({ navigation }) => {
 
     bootstrapAsync();
   }, []);
-
+  const stackOptions = {
+    headerShown: false,
+    title: 'Sign in',
+    // When logging out, a pop animation feels intuitive
+    animationTypeForReplace: state.isSignout ? 'pop' : 'push',
+  }
 
   return (
     <NavigationContainer>
@@ -51,22 +57,17 @@ const App = ({ navigation }) => {
             <Stack.Screen
               name="GetStarted"
               component={GetStartedScreen}
-              options={{
-                headerShown: false,
-                title: 'Sign in',
-                // When logging out, a pop animation feels intuitive
-                animationTypeForReplace: state.isSignout ? 'pop' : 'push',
-              }}
+              options={stackOptions}
             />
             <Stack.Screen
               name="SignIn"
               component={SignInScreen}
-              options={{
-                headerShown: false,
-                title: 'Sign in',
-                // When logging out, a pop animation feels intuitive
-                animationTypeForReplace: state.isSignout ? 'pop' : 'push',
-              }}
+              options={stackOptions}
+            />
+            <Stack.Screen
+              name="SmsAuthentication"
+              component={SmsAuthenticationScreen}
+              options={stackOptions}
             />
 
           </>

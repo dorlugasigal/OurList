@@ -1,14 +1,13 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { StyleSheet, View, Button, Dimensions, StatusBar, } from 'react-native'
 import { Context as AuthContext } from "../context/AuthContext"
 import { Image, Input, Icon, Text } from 'react-native-elements'
 import * as Animatable from "react-native-animatable"
 
-const SignIn = ({ navigation: { navigate } }) => {
+
+const SmsAuthentication = ({ navigation: { navigate }, route: { params: { phoneNumber } } }) => {
     const { state, restoreToken } = useContext(AuthContext)
-    const [phoneNumber, setPhoneNumber] = useState("")
     const { height } = Dimensions.get("screen")
-    const isPhoneNumberValid = phoneNumber.length === 9
 
     return (
         <View style={styles.container}>
@@ -17,13 +16,12 @@ const SignIn = ({ navigation: { navigate } }) => {
                     animation="bounceIn"
                     duration={800}
                     source={require("../../assets/logo.png")}
-                    style={{ height: height * 0.2, width: height * 0.2 }}
+                    style={{ height: height * 0.15, width: height * 0.15 }}
                 />
                 <View style={styles.welcomeTextContainer}>
-                    <Text style={styles.welcomeTextHeader} h4 >Login With Mobile Number</Text>
-                    <Text style={styles.welcomeText} >We will send you one time password (OTP).</Text>
+                    <Text style={styles.welcomeTextHeader} h3 >Verification Code</Text>
+                    <Text style={styles.welcomeText} >Please type the verification code sent to {phoneNumber}.</Text>
                 </View>
-
             </View>
             <Animatable.View
                 animation="fadeInUpBig"
@@ -31,43 +29,15 @@ const SignIn = ({ navigation: { navigate } }) => {
                 style={styles.footer}
                 behavior="padding"
             >
-                <View style={styles.phoneInputContainer}>
-                    <View style={styles.prefixContainer}>
-                        <Text style={styles.prefix}>+972 (0)</Text>
-                        <Image source={{ uri: "https://www.countryflags.io/il/shiny/64.png" }} style={{ width: 20, height: 20, alignContent: "center" }} />
-                    </View>
-                    <View style={styles.inputContainer}>
-                        <Input
-                            placeholder="Mobile Number"
-                            keyboardType="number-pad"
-                            underlineColorAndroid="transparent"
-                            value={phoneNumber}
-                            onChangeText={setPhoneNumber}
-                            maxLength={10}
-
-                            rightIcon={
-
-                                isPhoneNumberValid ? <Icon
-                                    name='check'
-                                    size={24}
-                                    color='green'
-                                /> : phoneNumber ? <Icon
-                                    name='error'
-                                    size={24}
-                                    color='#d83253'
-                                /> : null
-                            }
-                        />
-                    </View>
-                </View>
-                <Button disabled={!isPhoneNumberValid} title="Send" onPress={() => navigate("SmsAuthentication", { phoneNumber: `+972${phoneNumber}` })} />
+                <View style={styles.inputContainer}></View>
+                <Button title="Verify" onPress={() => { }} />
             </Animatable.View>
             <StatusBar style="auto" />
         </View >
 
     );
 }
-export default SignIn
+export default SmsAuthentication
 
 
 const styles = StyleSheet.create({
