@@ -1,13 +1,44 @@
-import React, { useContext, useState, useEffect } from 'react'
-import { StyleSheet, View, Button, Dimensions, StatusBar, } from 'react-native'
+import React, { useContext, useRef, useState } from 'react'
+import { StyleSheet, View, Button, Dimensions, StatusBar, TextInput } from 'react-native'
 import { Context as AuthContext } from "../context/AuthContext"
-import { Image, Input, Icon, Text } from 'react-native-elements'
+import { Text } from "react-native-elements"
 import * as Animatable from "react-native-animatable"
 
 
 const SmsAuthentication = ({ navigation: { navigate }, route: { params: { phoneNumber } } }) => {
-    const { state, restoreToken } = useContext(AuthContext)
+    const { state, signIn } = useContext(AuthContext)
+    const [isValid, setIsValid] = useState(false)
     const { height } = Dimensions.get("screen")
+
+    const [pin1, setPin1] = useState("")
+    const [pin2, setPin2] = useState("")
+    const [pin3, setPin3] = useState("")
+    const [pin4, setPin4] = useState("")
+    const inputRef1 = useRef(null)
+    const inputRef2 = useRef(null)
+    const inputRef3 = useRef(null)
+    const inputRef4 = useRef(null)
+
+    const otp = `${pin1}${pin2}${pin3}${pin4}`
+
+    const validateInput = () => {
+        setIsValid(!pin1 || !pin2 || !pin3 || !pin4)
+    }
+    const verifyOtp = () => {
+        if (otp === "1234") {
+            signIn("Dor Lugasi")
+        }
+    }
+
+    const changeDataAndFocusNext = (data, currentPin) => {
+        eval(`setPin${currentPin}`)(data)
+        if (currentPin == 4) {
+            validateInput()
+        } else {
+            if (!data) return
+            eval(`inputRef${currentPin + 1}`).current.focus();
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -29,8 +60,53 @@ const SmsAuthentication = ({ navigation: { navigate }, route: { params: { phoneN
                 style={styles.footer}
                 behavior="padding"
             >
-                <View style={styles.inputContainer}></View>
-                <Button title="Verify" onPress={() => { }} />
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        keyboardType="number-pad"
+                        maxLength={1}
+                        style={styles.otpChar}
+                        ref={inputRef1}
+                        value={pin1}
+                        onKeyPress={({ nativeEvent }) => {
+                            nativeEvent.key === 'Backspace' ? inputRef1.current.focus() : null
+                        }}
+                        onChangeText={(data) => changeDataAndFocusNext(data, 1)}
+                    />
+                    <TextInput keyboardType="number-pad"
+                        maxLength={1}
+                        style={styles.otpChar}
+                        ref={inputRef2}
+                        value={pin2}
+                        onChangeText={(data) => changeDataAndFocusNext(data, 2)}
+                        onKeyPress={({ nativeEvent }) => {
+                            nativeEvent.key === 'Backspace' ? inputRef1.current.focus() : null
+                        }}
+                    />
+                    <TextInput
+                        keyboardType="number-pad"
+                        maxLength={1}
+                        style={styles.otpChar}
+                        ref={inputRef3}
+                        value={pin3}
+                        onChangeText={(data) => changeDataAndFocusNext(data, 3)}
+                        onKeyPress={({ nativeEvent }) => {
+                            nativeEvent.key === 'Backspace' ? inputRef2.current.focus() : null
+                        }}
+                    />
+                    <TextInput
+                        keyboardType="number-pad"
+                        maxLength={1}
+                        style={styles.otpChar}
+                        ref={inputRef4}
+                        value={pin4}
+                        onChangeText={(data) => changeDataAndFocusNext(data, 4)}
+                        onKeyPress={({ nativeEvent }) => {
+                            nativeEvent.key === 'Backspace' ? inputRef3.current.focus() : null
+                        }}
+                    />
+                </View>
+
+                <Button disabled={!isValid} title="Verify" onPress={verifyOtp} />
             </Animatable.View>
             <StatusBar style="auto" />
         </View >
@@ -50,11 +126,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
-    phonePrefix: {
-        backgroundColor: "gray",
-        alignSelf: "center",
-
-    },
     footer: {
         flex: 1,
         backgroundColor: "#fff",
@@ -63,24 +134,20 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
         paddingVertical: 50,
     },
-    phoneInputContainer: {
-        height: 70,
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: 'white',
-    },
+
     inputContainer: {
         paddingTop: 10,
-        flex: 1
+        flexDirection: "row"
     },
-    prefix: {
-        color: "gray"
-    },
-    prefixContainer: {
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    welcomeTextContainer: {
+    otpChar: {
+        flex: 1,
+        backgroundColor: "#AAA",
+        paddingHorizontal: 5,
+        paddingVertical: 10,
+        margin: 10,
+        textAlign: "center",
+        borderRadius: 10
+    }, welcomeTextContainer: {
         paddingHorizontal: 30,
         marginTop: 30,
         alignItems: 'center'

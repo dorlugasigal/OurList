@@ -5,7 +5,7 @@ import { Image, Input, Icon, Text } from 'react-native-elements'
 import * as Animatable from "react-native-animatable"
 
 const SignIn = ({ navigation: { navigate } }) => {
-    const { state, restoreToken } = useContext(AuthContext)
+    const { state, signIn } = useContext(AuthContext)
     const [phoneNumber, setPhoneNumber] = useState("")
     const { height } = Dimensions.get("screen")
     const isPhoneNumberValid = phoneNumber.length === 9
