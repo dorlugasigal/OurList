@@ -1,52 +1,18 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { StyleSheet, View, Button, Dimensions, StatusBar, Animated, Keyboard, KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, View, Button, Dimensions, StatusBar, } from 'react-native'
 import { Context as AuthContext } from "../context/AuthContext"
-import { SocialIcon, Input, Icon, Text } from 'react-native-elements'
+import { Image, Input, Icon, Text } from 'react-native-elements'
 import * as Animatable from "react-native-animatable"
+//import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
+
 
 const SignIn = ({ navigation: { navigate } }) => {
     const { state, restoreToken } = useContext(AuthContext)
-
+    const [phoneNumber, setPhoneNumber] = useState("")
     const { height } = Dimensions.get("screen")
 
-    const [username, setUsername] = React.useState('');
-    const [password, setPassword] = React.useState('');
 
-    const { signIn } = React.useContext(AuthContext);
-    const login = async () => {
-        try {
-            await Facebook.initializeAsync("1429991460507265");
-            const {
-                type,
-                token,
-                expires,
-                permissions,
-                declinedPermissions,
-            } = await Facebook.logInWithReadPermissionsAsync({
-                permissions: ['public_profile', "user_friends"],
-                appId: '1429991460507265',
-                appName: "OurList"
-            });
-            if (type === 'success') {
-                // Get the user's name using Facebook's Graph API
-                const res = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-                var me = await res.json();
-                const response = await fetch(`https://graph.facebook.com/v7.0/${me.id}/friends?access_token=${token}`);
-                var friends = await response.json();
-                setFriends(friends)
-                const picture = await fetch(`https://graph.facebook.com/v7.0/${friends.data[0].id}/picture?access_token=${token}&type=normal&height=100&width=100`);
-                setPicture(picture.url)
-                console.log(`${me.name} phone`)
-
-                Alert.alert('Logged in!', `Hi ${me.name}!`);
-            } else {
-                // type === 'cancel'
-            }
-        } catch ({ message }) {
-            console.log(message)
-            alert(`Facebook Login Error: ${message}`);
-        }
-    }
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -56,6 +22,10 @@ const SignIn = ({ navigation: { navigate } }) => {
                     source={require("../../assets/logo.png")}
                     style={{ height: height * 0.2, width: height * 0.2 }}
                 />
+                <View style={styles.welcomeTextContainer}>
+                    <Text style={styles.welcomeTextHeader} h3 >Verify Your Number</Text>
+                    <Text style={styles.welcomeText}>Please enter your phone number. You will get a SMS including a verification code.</Text>
+                </View>
 
             </View>
             <Animatable.View
@@ -64,35 +34,21 @@ const SignIn = ({ navigation: { navigate } }) => {
                 style={styles.footer}
                 behavior="padding"
             >
-                <Input
-                    placeholder='Email'
-                    value={username}
-                    onChangeText={setUsername}
-                    leftIcon={
-                        <Icon
-                            name='email'
-                            type='fontisto'
-                            size={20}
-                            color='gray'
+                <View style={styles.phoneInputContainer}>
+                    <View style={styles.prefixContainer}>
+                        <Text style={styles.prefix}>(+972)</Text>
+                        <Image source={{ uri: "https://www.countryflags.io/il/shiny/64.png" }} style={{ width: 20, height: 20, alignContent: "center" }} />
+                    </View>
+                    <View style={styles.inputContainer}>
+                        <Input
+                            placeholder="Mobile Number"
+                            keyboardType="number-pad"
+                            underlineColorAndroid="transparent"
+                            onChangeText={setPhoneNumber}
                         />
-                    }
-                />
-                <Input
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry
-                    placeholder='Password'
-                    leftIcon={
-                        <Icon
-                            color='gray'
-                            name='lock'
-                            type="feather"
-                            size={20}
-                        />
-                    }
-                />
-                <Button title="Sign in" onPress={() => signIn({ username, password })} />
-                <Button title="Sign up" onPress={() => signIn({ username, password })} />
+                    </View>
+                </View>
+                <Button title="Send" onPress={() => signIn({ phoneNumber })} />
             </Animatable.View>
             <StatusBar style="auto" />
         </View >
@@ -112,12 +68,44 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
+    phonePrefix: {
+        backgroundColor: "gray",
+        alignSelf: "center",
+
+    },
     footer: {
-        flex: 2,
+        flex: 1,
         backgroundColor: "#fff",
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         paddingHorizontal: 30,
         paddingVertical: 50,
+    },
+    phoneInputContainer: {
+        height: 70,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'white',
+    },
+    inputContainer: {
+        paddingTop: 10,
+        flex: 1
+    },
+    prefix: {
+        color: "gray"
+    },
+    prefixContainer: {
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    welcomeTextContainer: {
+        paddingHorizontal: 30,
+        marginTop: 30,
+    },
+    welcomeTextHeader: {
+        color: "#d8ccff",
+    },
+    welcomeText: {
+        color: "#FFF"
     }
 })
