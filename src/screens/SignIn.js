@@ -24,7 +24,7 @@ const SignIn = ({ navigation: { navigate } }) => {
                 />
                 <View style={styles.welcomeTextContainer}>
                     <Text style={styles.welcomeTextHeader} h3 >Verify Your Number</Text>
-                    <Text style={styles.welcomeText}>Please enter your phone number. You will get a SMS including a verification code.</Text>
+                    <Text style={styles.welcomeText} >Please enter your phone number. You will get a SMS including a verification code.</Text>
                 </View>
 
             </View>
@@ -101,11 +101,13 @@ const styles = StyleSheet.create({
     welcomeTextContainer: {
         paddingHorizontal: 30,
         marginTop: 30,
+        alignItems: 'center'
     },
     welcomeTextHeader: {
         color: "#d8ccff",
     },
     welcomeText: {
-        color: "#FFF"
+        color: "#FFF",
+        textAlign: "center"
     }
 })
