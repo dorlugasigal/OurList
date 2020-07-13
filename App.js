@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AsyncStorage } from 'react-native';
 
 import HomeScreen from "./src/screens/Home"
@@ -10,13 +10,30 @@ import SplashScreen from "./src/screens/Splash"
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Context as AuthContext, Provider as AuthProvider } from "./src/context/AuthContext.js"
+import * as Font from 'expo-font';
+
+import {
+  setCustomText,
+} from 'react-native-global-props';
 
 const Stack = createStackNavigator();
 
 const App = ({ navigation }) => {
-  const { state, restoreToken } = useContext(AuthContext)
+  const [ready, setReady] = useState(false)
+  useEffect(() => {
+    Font.loadAsync({
+      'Montserrat': require('./assets/fonts/Montserrat-Medium.ttf')
+    }).then(() => {
+      setCustomText({
+        style: {
+          fontFamily: "Montserrat"
+        }
+      });
+      setReady(true)
+    })
+  }, [])
 
-  console.log(restoreToken)
+  const { state, restoreToken } = useContext(AuthContext)
 
   React.useEffect(() => {
     // Fetch the token from storage then navigate to our appropriate place
@@ -46,7 +63,7 @@ const App = ({ navigation }) => {
   }
 
   return (
-    <NavigationContainer>
+    ready && <NavigationContainer>
       <Stack.Navigator>
         {state.isLoading ? (
           // We haven't finished checking for the token yet

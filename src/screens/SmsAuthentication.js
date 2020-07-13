@@ -1,7 +1,6 @@
 import React, { useContext, useRef, useState } from 'react'
-import { StyleSheet, View, Button, Dimensions, StatusBar, TextInput } from 'react-native'
+import { StyleSheet, View, Button, Dimensions, StatusBar, TextInput, Text } from 'react-native'
 import { Context as AuthContext } from "../context/AuthContext"
-import { Text } from "react-native-elements"
 import * as Animatable from "react-native-animatable"
 
 
@@ -50,7 +49,7 @@ const SmsAuthentication = ({ navigation: { navigate }, route: { params: { phoneN
                     style={{ height: height * 0.15, width: height * 0.15 }}
                 />
                 <View style={styles.welcomeTextContainer}>
-                    <Text style={styles.welcomeTextHeader} h3 >Verification Code</Text>
+                    <Text style={styles.welcomeTextHeader}  >Verification Code</Text>
                     <Text style={styles.welcomeText} >Please type the verification code sent to {phoneNumber}.</Text>
                 </View>
             </View>
@@ -154,6 +153,9 @@ const styles = StyleSheet.create({
     },
     welcomeTextHeader: {
         color: "#d8ccff",
+        fontSize: 30,
+        textAlign: "center"
+
     },
     welcomeText: {
         color: "#FFF",

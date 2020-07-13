@@ -1,12 +1,14 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { StyleSheet, View, Dimensions, StatusBar, Alert, } from 'react-native'
+import { StyleSheet, View, Dimensions, StatusBar, Alert, Text } from 'react-native'
 import { Context as AuthContext } from "../context/AuthContext"
 import * as Facebook from 'expo-facebook';
-import { SocialIcon, Text } from 'react-native-elements'
+import { SocialIcon } from 'react-native-elements'
 import * as Animatable from "react-native-animatable"
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
+
 const GetStarted = ({ navigation: { navigate } }) => {
+
 
     const { height } = Dimensions.get("screen")
     const login = async () => {
@@ -46,15 +48,17 @@ const GetStarted = ({ navigation: { navigate } }) => {
                     animation="bounceIn"
                     duration={800}
                     source={require("../../assets/logo.png")}
-                    style={{ height: height * 0.3, width: height * 0.3 }}
+                    style={{ height: height * 0.2, width: height * 0.2, margin: 30 }}
                 />
-
+                <Text fontFamily="Cochin" style={{ fontSize: 40, color: "#d8ccff", textAlign: "center", }}>OurList</Text>
+                <Text style={{ color: "#FFF", fontSize: 20, textAlign: "center", }}>glad to see you here</Text>
             </View>
             <Animatable.View
                 duration={1000}
                 animation="fadeInUpBig"
                 style={styles.footer}
             >
+
                 <SocialIcon
                     title='Sign In With Facebook'
                     button
@@ -95,6 +99,6 @@ const styles = StyleSheet.create({
     textStyle: {
         color: "gray",
         paddingVertical: 10,
-        textAlign: "center"
+        textAlign: "center",
     },
 })

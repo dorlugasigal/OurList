@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
-import { StyleSheet, View, Button, Dimensions, StatusBar, } from 'react-native'
+import { StyleSheet, View, Button, Dimensions, StatusBar, Text } from 'react-native'
 import { Context as AuthContext } from "../context/AuthContext"
-import { Image, Input, Icon, Text } from 'react-native-elements'
+import { Image, Input, Icon, } from 'react-native-elements'
 import * as Animatable from "react-native-animatable"
 
 const SignIn = ({ navigation: { navigate } }) => {
@@ -20,7 +20,7 @@ const SignIn = ({ navigation: { navigate } }) => {
                     style={{ height: height * 0.2, width: height * 0.2 }}
                 />
                 <View style={styles.welcomeTextContainer}>
-                    <Text style={styles.welcomeTextHeader} h4 >Login With Mobile Number</Text>
+                    <Text style={styles.welcomeTextHeader}  >Login With Mobile Number</Text>
                     <Text style={styles.welcomeText} >We will send you one time password (OTP).</Text>
                 </View>
 
@@ -117,6 +117,8 @@ const styles = StyleSheet.create({
     },
     welcomeTextHeader: {
         color: "#d8ccff",
+        fontSize: 23,
+        textAlign: "center"
     },
     welcomeText: {
         color: "#FFF",
