@@ -1,5 +1,6 @@
 import React, { useContext, useRef, useState } from 'react'
-import { StyleSheet, View, Button, Dimensions, StatusBar, TextInput, Text } from 'react-native'
+import { StyleSheet, View, Dimensions, StatusBar, TextInput, Text } from 'react-native'
+import { Button } from "react-native-elements"
 import { Context as AuthContext } from "../context/AuthContext"
 import * as Animatable from "react-native-animatable"
 
@@ -132,6 +133,11 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 30,
         paddingHorizontal: 30,
         paddingVertical: 50,
+        shadowColor: 'rgba(35,21,42,0.5)',
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 1,
+        shadowRadius: 1,
+
     },
 
     inputContainer: {
@@ -139,13 +145,17 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     },
     otpChar: {
+        width: "20%",
         flex: 1,
         backgroundColor: "#AAA",
         paddingHorizontal: 5,
         paddingVertical: 10,
         margin: 10,
         textAlign: "center",
-        borderRadius: 10
+        borderRadius: 10,
+        fontSize: 20,
+        fontWeight: "bold",
+        color: "#fff"
     }, welcomeTextContainer: {
         paddingHorizontal: 30,
         marginTop: 30,

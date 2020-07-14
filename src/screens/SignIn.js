@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react'
-import { StyleSheet, View, Button, Dimensions, StatusBar, Text } from 'react-native'
+import { StyleSheet, View, Dimensions, StatusBar, Text } from 'react-native'
 import { Context as AuthContext } from "../context/AuthContext"
-import { Image, Input, Icon, } from 'react-native-elements'
+import { Image, Input, Icon, Button } from 'react-native-elements'
 import * as Animatable from "react-native-animatable"
+import { LinearGradient } from 'expo-linear-gradient';
 
 const SignIn = ({ navigation: { navigate } }) => {
     const { state, signIn } = useContext(AuthContext)
@@ -38,13 +39,18 @@ const SignIn = ({ navigation: { navigate } }) => {
                     </View>
                     <View style={styles.inputContainer}>
                         <Input
+                            inputContainerStyle={styles.input}
+                            inputStyle={{
+                                paddingHorizontal: 10,
+                                letterSpacing: 2,
+                                fontSize: 20,
+                            }}
                             placeholder="Mobile Number"
                             keyboardType="number-pad"
                             underlineColorAndroid="transparent"
                             value={phoneNumber}
                             onChangeText={setPhoneNumber}
                             maxLength={10}
-
                             rightIcon={
 
                                 isPhoneNumberValid ? <Icon
@@ -60,7 +66,16 @@ const SignIn = ({ navigation: { navigate } }) => {
                         />
                     </View>
                 </View>
-                <Button disabled={!isPhoneNumberValid} title="Send" onPress={() => navigate("SmsAuthentication", { phoneNumber: `+972${phoneNumber}` })} />
+
+                <Button
+                    title='Use your phone number instead'
+                    disabled={!isPhoneNumberValid}
+                    button
+                    titleStyle={{ color: "#FFF" }}
+                    buttonStyle={{ borderRadius: 1000, padding: 10 }}
+                    onPress={() => navigate("SmsAuthentication", { phoneNumber: `+972${phoneNumber}` })}
+
+                />
             </Animatable.View>
             <StatusBar style="auto" />
         </View >
@@ -83,7 +98,9 @@ const styles = StyleSheet.create({
     phonePrefix: {
         backgroundColor: "gray",
         alignSelf: "center",
-
+    },
+    input: {
+        paddingHorizontal: 10,
     },
     footer: {
         flex: 1,
@@ -92,15 +109,22 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 30,
         paddingHorizontal: 30,
         paddingVertical: 50,
+        shadowColor: 'rgba(35,21,42,0.5)',
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 1,
+        shadowRadius: 1,
+
     },
     phoneInputContainer: {
+        flex: 1,
         height: 70,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'white',
+        padding: 5
+
     },
     inputContainer: {
-        paddingTop: 10,
         flex: 1
     },
     prefix: {

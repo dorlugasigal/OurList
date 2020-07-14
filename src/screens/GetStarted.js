@@ -2,9 +2,8 @@ import React, { useContext, useState, useEffect } from 'react'
 import { StyleSheet, View, Dimensions, StatusBar, Alert, Text } from 'react-native'
 import { Context as AuthContext } from "../context/AuthContext"
 import * as Facebook from 'expo-facebook';
-import { SocialIcon } from 'react-native-elements'
+import { SocialIcon, Button } from 'react-native-elements'
 import * as Animatable from "react-native-animatable"
-import { TouchableOpacity } from 'react-native-gesture-handler'
 
 
 const GetStarted = ({ navigation: { navigate } }) => {
@@ -50,26 +49,30 @@ const GetStarted = ({ navigation: { navigate } }) => {
                     source={require("../../assets/logo.png")}
                     style={{ height: height * 0.2, width: height * 0.2, margin: 30 }}
                 />
-                <Text fontFamily="Cochin" style={{ fontSize: 40, color: "#d8ccff", textAlign: "center", }}>OurList</Text>
-                <Text style={{ color: "#FFF", fontSize: 20, textAlign: "center", }}>glad to see you here</Text>
+                <Text fontFamily="Cochin" style={styles.headerStyle}>OurList</Text>
+                <Text style={styles.secondaryHeaderStyle}> glad to see you here</Text>
             </View>
             <Animatable.View
                 duration={1000}
                 animation="fadeInUpBig"
                 style={styles.footer}
             >
+                <Text style={styles.welcomeMessage}>Log in to OurList</Text>
 
                 <SocialIcon
                     title='Sign In With Facebook'
                     button
+                    fontFamily={"montserrat"}
+                    style={{ marginHorizontal: 0, marginVertical: 10 }}
                     type='facebook'
                     onPress={login}
                 />
-                <TouchableOpacity onPress={() => navigate("SignIn")} >
-                    <Text style={styles.textStyle}>
-                        Use your phone number instead
-                    </Text>
-                </TouchableOpacity>
+                <Button title='Use your phone number instead'
+                    button
+                    type='outline'
+                    buttonStyle={{ borderRadius: 1000, padding: 10 }}
+                    onPress={() => navigate("SignIn")} >
+                </Button>
             </Animatable.View>
             <StatusBar style="auto" />
         </View >
@@ -84,7 +87,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#3f2d5c"
     },
     header: {
-        flex: 4,
+        flex: 3,
         justifyContent: "center",
         alignItems: "center"
     },
@@ -93,12 +96,34 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        paddingHorizontal: 30,
-        paddingVertical: 50,
+        paddingHorizontal: 50,
+        paddingTop: 20,
+        paddingBottom: 50,
+        shadowColor: 'rgba(35,21,42,0.5)',
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 1,
+        shadowRadius: 1,
+
     },
     textStyle: {
         color: "gray",
         paddingVertical: 10,
         textAlign: "center",
     },
+    headerStyle: {
+        fontSize: 40,
+        color: "#d8ccff",
+        textAlign: "center"
+    },
+    secondaryHeaderStyle: {
+        color: "#FFF",
+        fontSize: 20,
+        textAlign: "center",
+    },
+    welcomeMessage: {
+        color: "gray",
+        fontSize: 20,
+        textAlign: "center",
+        padding: 10
+    }
 })

@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AsyncStorage } from 'react-native';
+import { ThemeProvider } from 'react-native-elements';
 
 import HomeScreen from "./src/screens/Home"
 import SignInScreen from "./src/screens/SignIn"
@@ -99,7 +100,15 @@ const App = ({ navigation }) => {
 export default () => {
   return (
     <AuthProvider>
-      <App />
+      <ThemeProvider theme={{
+        colors: {
+          primary: 'rgb(160,126,177)',
+        },
+
+      }} >
+        <App />
+      </ThemeProvider  >
+
     </AuthProvider >
   )
 }
