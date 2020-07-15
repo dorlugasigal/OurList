@@ -23,6 +23,7 @@ const SmsAuthentication = ({ navigation: { navigate }, route: { params: { phoneN
 
     const validateInput = () => {
         setIsValid(!pin1 || !pin2 || !pin3 || !pin4)
+        signIn("token")
     }
     const verifyOtp = () => {
         if (otp === "1234") {
@@ -34,6 +35,7 @@ const SmsAuthentication = ({ navigation: { navigate }, route: { params: { phoneN
         eval(`setPin${currentPin}`)(data)
         if (currentPin == 4) {
             validateInput()
+
         } else {
             if (!data) return
             eval(`inputRef${currentPin + 1}`).current.focus();

@@ -39,7 +39,6 @@ const SignIn = ({ navigation: { navigate } }) => {
                     </View>
                     <View style={styles.inputContainer}>
                         <Input
-                            inputContainerStyle={styles.input}
                             inputStyle={{
                                 paddingHorizontal: 10,
                                 letterSpacing: 2,
@@ -98,9 +97,6 @@ const styles = StyleSheet.create({
     phonePrefix: {
         backgroundColor: "gray",
         alignSelf: "center",
-    },
-    input: {
-        paddingHorizontal: 10,
     },
     footer: {
         flex: 1,

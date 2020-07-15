@@ -1,4 +1,5 @@
 import createDataContext from "./createDataContext"
+import { AsyncStorage } from "react-native";
 
 const authReducer = (state, action) => {
     switch (action.type) {
@@ -28,14 +29,22 @@ const authReducer = (state, action) => {
 const signIn = (dispatch, data) => {
     return async (data) => {
         console.log(data)
+
         // In a production app, we need to send some data (usually username, password) to server and get a token
         // We will also need to handle errors if sign in failed
         // After getting token, we need to persist the token using `AsyncStorage`
         // In the example, we'll use a dummy token
+
+        await AsyncStorage.setItem('userToken', 'dummy-auth-token');
         dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
     }
 }
-const signOut = (dispatch) => () => dispatch({ type: 'SIGN_OUT' })
+const signOut = (dispatch) => {
+    return async () => {
+        await AsyncStorage.setItem('userToken', "")
+        dispatch({ type: 'SIGN_OUT' })
+    }
+}
 
 const signUp = (dispatch, data) => {
     return async (data) => {
@@ -43,14 +52,14 @@ const signUp = (dispatch, data) => {
         // We will also need to handle errors if sign up failed
         // After getting token, we need to persist the token using `AsyncStorage`
         // In the example, we'll use a dummy token
-
+        await AsyncStorage.setItem('userToken', 'dummy-auth-token');
         dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
     }
 }
 
 const restoreToken = (dispatch, token) => {
     return async (token) => {
-        console.log("hi")
+
         // In a production app, we need to send user data to server and get a token
         // We will also need to handle errors if sign up failed
         // After getting token, we need to persist the token using `AsyncStorage`

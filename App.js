@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AsyncStorage } from 'react-native';
 import { ThemeProvider } from 'react-native-elements';
 
-import HomeScreen from "./src/screens/Home"
+import Dashboard from "./src/screens/Dashboard"
 import SignInScreen from "./src/screens/SignIn"
 import GetStartedScreen from "./src/screens/GetStarted"
 import SmsAuthenticationScreen from "./src/screens/SmsAuthentication"
@@ -43,7 +43,9 @@ const App = ({ navigation }) => {
 
       try {
         userToken = await AsyncStorage.getItem('userToken');
+        console.log(userToken, "userToken")
       } catch (e) {
+        console.log("didnt found", "userToken")
         // Restoring token failed
       }
 
@@ -91,7 +93,7 @@ const App = ({ navigation }) => {
           </>
         ) : (
               // User is signed in
-              <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen name="Dashboard" component={Dashboard} />
             )}
       </Stack.Navigator>
     </NavigationContainer>)
@@ -108,7 +110,6 @@ export default () => {
       }} >
         <App />
       </ThemeProvider  >
-
     </AuthProvider >
   )
 }

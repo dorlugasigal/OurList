@@ -62,7 +62,7 @@ const GetStarted = ({ navigation: { navigate } }) => {
                 <SocialIcon
                     title='Sign In With Facebook'
                     button
-                    fontFamily={"montserrat"}
+                    fontFamily={"Montserrat"}
                     style={{ marginHorizontal: 0, marginVertical: 10 }}
                     type='facebook'
                     onPress={login}
